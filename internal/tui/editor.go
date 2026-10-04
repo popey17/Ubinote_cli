@@ -10,9 +10,9 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"ubinote-cli/internal/api"
-	"ubinote-cli/internal/format"
-	"ubinote-cli/internal/ui"
+	"github.com/popey17/Ubinote_cli/internal/api"
+	"github.com/popey17/Ubinote_cli/internal/format"
+	"github.com/popey17/Ubinote_cli/internal/ui"
 )
 
 type editorModel struct {

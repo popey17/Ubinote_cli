@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"ubinote-cli/internal/config"
+	"github.com/popey17/Ubinote_cli/internal/config"
 )
 
 func newConfigCmd() *cobra.Command {

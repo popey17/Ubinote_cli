@@ -4,7 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/lipgloss"
 
-	"ubinote-cli/internal/format"
+	"github.com/popey17/Ubinote_cli/internal/format"
 )
 
 type formatItem struct {

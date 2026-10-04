@@ -3,7 +3,7 @@ package tui
 import (
 	"github.com/charmbracelet/lipgloss"
 
-	"ubinote-cli/internal/ui"
+	"github.com/popey17/Ubinote_cli/internal/ui"
 )
 
 // Welcome + login styles — same light-blue palette as notes.

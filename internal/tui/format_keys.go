@@ -3,7 +3,7 @@ package tui
 import (
 	tea "github.com/charmbracelet/bubbletea"
 
-	"ubinote-cli/internal/format"
+	"github.com/popey17/Ubinote_cli/internal/format"
 )
 
 func BindingFor(msg tea.KeyMsg) (format.Action, bool) {

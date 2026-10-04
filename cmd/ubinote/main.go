@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"ubinote-cli/internal/cli"
+	"github.com/popey17/Ubinote_cli/internal/cli"
 )
 
 func main() {

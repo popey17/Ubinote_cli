@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-const defaultAPIURL = "http://localhost:8080"
+const defaultAPIURL = "https://ubinote-seven.vercel.app"
 
 type Config struct {
 	APIURL string `json:"api_url"`

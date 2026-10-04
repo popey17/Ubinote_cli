@@ -9,7 +9,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"ubinote-cli/internal/config"
+	"github.com/popey17/Ubinote_cli/internal/config"
 )
 
 type loginModel struct {

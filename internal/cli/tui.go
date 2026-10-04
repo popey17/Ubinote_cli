@@ -3,8 +3,8 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"ubinote-cli/internal/api"
-	"ubinote-cli/internal/tui"
+	"github.com/popey17/Ubinote_cli/internal/api"
+	"github.com/popey17/Ubinote_cli/internal/tui"
 )
 
 func newTUICmd() *cobra.Command {

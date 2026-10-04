@@ -13,9 +13,9 @@ import (
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
 
-	"ubinote-cli/internal/api"
-	"ubinote-cli/internal/config"
-	"ubinote-cli/internal/ui"
+	"github.com/popey17/Ubinote_cli/internal/api"
+	"github.com/popey17/Ubinote_cli/internal/config"
+	"github.com/popey17/Ubinote_cli/internal/ui"
 )
 
 type mode int

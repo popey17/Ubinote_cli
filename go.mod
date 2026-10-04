@@ -1,4 +1,4 @@
-module ubinote-cli
+module github.com/popey17/Ubinote_cli
 
 go 1.27.1
 

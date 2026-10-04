@@ -13,31 +13,29 @@ Browse and edit Markdown notes in an interactive TUI, or use scriptable commands
 - Slow-load warning when the API is waking up
 - CLI commands for list / view / create / edit / delete
 
-## Requirements
+## Install
 
-- Go 1.27+
-- A running personal_note API (default `http://localhost:8000`)
-
-## Quick start
+**With Go**
 
 ```bash
-# 1) Start the API (separate terminal)
-cd ../personal_note
-go run ./cmd/api
+go install github.com/popey17/Ubinote_cli/cmd/ubinote@latest
+```
 
-# 2) Build and run the CLI
-cd ../ubinote_cli
+Ensure `$(go env GOPATH)/bin` is on your `PATH`, then run `ubinote`.
+
+**From source**
+
+```bash
+git clone https://github.com/popey17/Ubinote_cli.git
+cd Ubinote_cli
 go build -o bin/ubinote ./cmd/ubinote
-
-./bin/ubinote config set-url http://localhost:8000   # if needed
 ./bin/ubinote
 ```
 
-Or without building:
+## Requirements
 
-```bash
-go run ./cmd/ubinote
-```
+- Go 1.27+ (for `go install` / building from source)
+- Reachable ubinote API (default URL is baked into the binary; override with `ubinote config set-url` or `UBINOTE_API_URL`)
 
 ## Configuration
 

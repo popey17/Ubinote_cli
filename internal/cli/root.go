@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"ubinote-cli/internal/api"
-	"ubinote-cli/internal/config"
+	"github.com/popey17/Ubinote_cli/internal/api"
+	"github.com/popey17/Ubinote_cli/internal/config"
 )
 
 func Execute() error {

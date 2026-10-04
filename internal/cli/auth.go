@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"ubinote-cli/internal/config"
+	"github.com/popey17/Ubinote_cli/internal/config"
 )
 
 func newLoginCmd() *cobra.Command {
