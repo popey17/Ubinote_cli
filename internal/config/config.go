@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-const defaultAPIURL = "http://localhost:8000"
+const defaultAPIURL = "http://localhost:8080"
 
 type Config struct {
 	APIURL string `json:"api_url"`

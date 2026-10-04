@@ -1,76 +1,132 @@
-# ubinote (CLI)
+# ubinote CLI
 
-Terminal client for the [personal_note](../personal_note) API. Notes are Markdown. Use scriptable commands or an interactive master–detail TUI.
+Terminal client for the [personal_note](../personal_note) API (same notes as [ubinote_web](../ubinote_web)).
+
+Browse and edit Markdown notes in an interactive TUI, or use scriptable commands.
+
+## Features
+
+- Welcome menu with mouse + keyboard
+- Login / register (JWT stored locally)
+- Master–detail notes browser (list + rendered Markdown)
+- Built-in editor with format shortcuts and palette (`ctrl+p`)
+- Slow-load warning when the API is waking up
+- CLI commands for list / view / create / edit / delete
 
 ## Requirements
 
 - Go 1.27+
-- Running API (default `http://localhost:8000`)
+- A running personal_note API (default `http://localhost:8000`)
 
-## Install
+## Quick start
 
 ```bash
-cd ubinote_cli
+# 1) Start the API (separate terminal)
+cd ../personal_note
+go run ./cmd/api
+
+# 2) Build and run the CLI
+cd ../ubinote_cli
 go build -o bin/ubinote ./cmd/ubinote
+
+./bin/ubinote config set-url http://localhost:8000   # if needed
+./bin/ubinote
 ```
 
-## Config
+Or without building:
 
-Stored under `~/.config/ubinote/` (or `$XDG_CONFIG_HOME/ubinote/`):
+```bash
+go run ./cmd/ubinote
+```
+
+## Configuration
+
+Files live under `~/.config/ubinote/` (or `$XDG_CONFIG_HOME/ubinote/`):
 
 | File | Purpose |
 | --- | --- |
 | `config.json` | `{ "api_url": "http://localhost:8000" }` |
 | `credentials.json` | `{ "token": "…" }` (mode `0600`) |
 
-Override URL: `UBINOTE_API_URL=http://host:port`
-
 ```bash
-./bin/ubinote config set-url http://localhost:8000
 ./bin/ubinote config show
+./bin/ubinote config set-url http://localhost:8000
 ```
 
-## Auth
+Environment override:
 
 ```bash
-./bin/ubinote register
-./bin/ubinote login
-./bin/ubinote logout
+export UBINOTE_API_URL=http://host:port
 ```
 
 ## Commands
 
 | Command | Description |
 | --- | --- |
-| `ubinote` / `ubinote tui` | Interactive browser |
-| `ubinote list` | List notes |
-| `ubinote view <id>` | Render Markdown to stdout |
-| `ubinote create` | Create note in TUI editor |
-| `ubinote edit <id>` | Edit note in TUI editor |
-| `ubinote delete <id>` | Delete with confirmation |
+| `ubinote` / `ubinote tui` | Open the interactive app |
+| `ubinote register` | Create an account (CLI prompts) |
+| `ubinote login` | Log in and store JWT |
+| `ubinote logout` | Clear local token |
+| `ubinote list` | List note ids and titles |
+| `ubinote view <id>` | Render Markdown to the terminal |
+| `ubinote create` | Create a note in the TUI editor |
+| `ubinote edit <id>` | Edit a note in the TUI editor |
+| `ubinote delete <id>` | Delete a note (asks for confirmation) |
+| `ubinote config show` | Show API URL and login status |
+| `ubinote config set-url <url>` | Set API base URL |
 
-## TUI keys
+## TUI
+
+### Flow
+
+**Welcome → Login → Notes**
+
+If a session already exists, the app opens the notes browser directly.
+
+### Welcome
+
+| Action | How |
+| --- | --- |
+| Login | Click or ↑↓ + Enter |
+| Help / Info | Click or ↑↓ + Enter |
+| Quit | `q` or click quit hint |
+
+### Login
+
+| Action | How |
+| --- | --- |
+| Focus fields | Click or Tab |
+| Submit | Click **Sign in** / Enter |
+| Toggle register | Click toggle or `ctrl+r` |
+| Back | Click **Back** or Esc |
+
+If connect takes longer than ~3s, a wake-up warning is shown.
+
+### Notes
 
 | Key | Action |
 | --- | --- |
-| ↑↓ / mouse | Navigate list |
-| Enter | Open note |
-| `e` | Edit |
+| ↑↓ | Move between notes |
+| `e` | Edit selected note |
 | `n` | New note |
-| `d` | Delete |
+| `d` | Delete selected note |
+| `r` | Refresh from API |
+| `L` | Log out (confirm with `y`) |
 | `/` | Filter list |
 | `q` | Quit |
+
+Selected note title is underlined. Preview is rendered Markdown (glamour).
 
 ### Editor
 
 | Key | Action |
 | --- | --- |
 | `ctrl+s` | Save |
-| `esc` | Cancel |
+| `esc` | Cancel (confirm if dirty) |
 | `tab` | Title ↔ body |
 | `ctrl+p` | Format palette |
 
-### Format shortcuts (body focused)
+#### Format shortcuts (body focused)
 
 | Key | Format |
 | --- | --- |
@@ -81,15 +137,41 @@ Override URL: `UBINOTE_API_URL=http://host:port`
 | `alt+c` | Inline code |
 | `ctrl+shift+c` | Code block |
 | `alt+u` / `alt+o` | Bullet / numbered list |
-| `alt+t` | Task |
+| `alt+t` | Task checklist |
 | `ctrl+]` / `ctrl+[` | Indent / outdent |
 | `alt+q` | Quote |
 
-If a chord does not reach the terminal, use `ctrl+p`.
+If a chord is swallowed by the terminal, use `ctrl+p`.
+
+## Project layout
+
+```
+cmd/ubinote/          entrypoint
+internal/api/         HTTP client for personal_note
+internal/cli/         cobra commands
+internal/config/      config + credentials
+internal/format/      Markdown format actions (web toolbar parity)
+internal/tui/         Bubble Tea app (welcome, login, browse, editor)
+internal/ui/          shared lipgloss theme
+```
+
+## Stack
+
+- [cobra](https://github.com/spf13/cobra) — commands
+- [Bubble Tea](https://github.com/charmbracelet/bubbletea) + [bubbles](https://github.com/charmbracelet/bubbles) + [lipgloss](https://github.com/charmbracelet/lipgloss) — TUI
+- [glamour](https://github.com/charmbracelet/glamour) — Markdown rendering
 
 ## Develop
 
 ```bash
 go test ./...
 go run ./cmd/ubinote --help
+go build -o bin/ubinote ./cmd/ubinote
 ```
+
+## Related projects
+
+| Path | Role |
+| --- | --- |
+| [`../personal_note`](../personal_note) | Go REST API |
+| [`../ubinote_web`](../ubinote_web) | Web UI (Vite + React) |
