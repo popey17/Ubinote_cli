@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"ubinote-cli/internal/cli"
+)
 
 func main() {
-	fmt.Println("ubinote")
+	if err := cli.Execute(); err != nil {
+		os.Exit(1)
+	}
 }
